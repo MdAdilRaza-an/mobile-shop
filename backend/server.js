@@ -39,6 +39,7 @@ app.use('/api/orders', orderRoutes);
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
+
   res.status(err.status || 500).json({
     success: false,
     message: err.message || 'Internal Server Error'
@@ -53,7 +54,13 @@ app.use('*', (req, res) => {
   });
 });
 
+// Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+
+const server = app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Keep connection alive
+server.keepAliveTimeout = 120000;
+server.headersTimeout = 120000;
