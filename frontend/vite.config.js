@@ -1,0 +1,19 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 3000,
+    allowedHosts: ['some-icons-return.loca.lt'],
+    proxy: {
+      '/api': {
+        target: 'http://localhost:5001',
+        changeOrigin: true
+      }
+    }
+  },
+  preview: {
+    allowedHosts: ['mobile-shop-demo-2026.loca.lt']
+  }
+})
